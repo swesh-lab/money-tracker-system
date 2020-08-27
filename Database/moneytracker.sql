@@ -2,6 +2,8 @@
 -- PHP Version: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -13,8 +15,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `moneytracker`
 --
-CREATE DATABASE IF NOT EXISTS `moneytracker` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `moneytracker`;
 
 -- --------------------------------------------------------
 
@@ -36,6 +36,14 @@ CREATE TABLE IF NOT EXISTS `balancesheet` (
   PRIMARY KEY (`userID`,`transactionDate`,`transactionTime`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `balancesheet`
+--
+
+INSERT INTO `balancesheet` (`userID`, `transactionDate`, `transactionTime`, `expenseAmount`, `expenseID`, `expenseNote`, `depositAmount`, `depositID`, `balanceAmount`) VALUES
+(100010, '2020-08-01', '16:00:00', NULL, NULL, NULL, 1000, 40010, 1000),
+(100010, '2020-08-01', '16:02:00', 200, 70010, 'Birthday Celebration', NULL, NULL, 800);
+
 -- --------------------------------------------------------
 
 --
@@ -49,7 +57,14 @@ CREATE TABLE IF NOT EXISTS `deposit` (
   `depositDate` date NOT NULL,
   `depositAmount` float NOT NULL,
   PRIMARY KEY (`depositID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=70011 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `deposit`
+--
+
+INSERT INTO `deposit` (`userID`, `depositID`, `depositDate`, `depositAmount`) VALUES
+(100010, 40010, '2020-08-01', 1000);
 
 -- --------------------------------------------------------
 
@@ -66,7 +81,14 @@ CREATE TABLE IF NOT EXISTS `expense` (
   `amount` float NOT NULL,
   `note` varchar(255) NOT NULL,
   PRIMARY KEY (`expenseID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=70011 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `expense`
+--
+
+INSERT INTO `expense` (`userID`, `expenseID`, `date`, `categoryID`, `amount`, `note`) VALUES
+(100010, 70010, '2020-08-01', 9010, 200, 'Birthday Celebration');
 
 -- --------------------------------------------------------
 
@@ -81,7 +103,14 @@ CREATE TABLE IF NOT EXISTS `expensecategory` (
   `name` varchar(50) NOT NULL,
   `description` varchar(100) NOT NULL,
   PRIMARY KEY (`categoryID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9011 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `expensecategory`
+--
+
+INSERT INTO `expensecategory` (`userID`, `categoryID`, `name`, `description`) VALUES
+(100010, 9010, 'Bakery', 'Dark Forest Celebration');
 
 -- --------------------------------------------------------
 
@@ -100,7 +129,15 @@ CREATE TABLE IF NOT EXISTS `userdetails` (
   `gender` varchar(6) NOT NULL,
   `password` varchar(40) NOT NULL,
   PRIMARY KEY (`userID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=100012 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `userdetails`
+--
+
+INSERT INTO `userdetails` (`userID`, `name`, `contact`, `address`, `city`, `mail`, `gender`, `password`) VALUES
+(100010, 'ItsMyVision', '8989898989', 'Lucknow, India', 'Lucknow', 'itsmyvision@gmail.com', 'female', 'p@ssword');
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
